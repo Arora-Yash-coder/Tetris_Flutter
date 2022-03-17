@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tetris/pages/home.dart';
+import 'package:tetris/home.dart';
 
 void main() {
   runApp(const MyApp());
