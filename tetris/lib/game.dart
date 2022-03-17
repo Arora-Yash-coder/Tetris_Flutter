@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tetris/button.dart';
 import 'package:tetris/grid.dart';
 
 class MyGame extends StatefulWidget {
@@ -76,28 +77,44 @@ class _MyGameState extends State<MyGame> {
     return Column(
       children: [
         Expanded(
+          flex: 10,
           child: MyGrid(),
         ),
-        Container(
-          height: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,
-            children: const [
-              Expanded(
-                child: Text("1"),
+        Expanded(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: MyButton(
+                      child: Text("1"),
+                    ),
+                  ),
+                  Expanded(
+                    child: MyButton(
+                      child: Text("1"),
+                    ),
+                  ),
+                  Expanded(
+                    child: MyButton(
+                      child: Text("1"),
+                    ),
+                  ),
+                  Expanded(
+                    child: MyButton(
+                      child: Text("1"),
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: Text("2"),
-              ),
-              Expanded(
-                child: Text("3"),
-              ),
-              Expanded(
-                child: Text("4"),
-              ),
-            ],
+            ),
           ),
+        ),
+        SizedBox(
+          height: 20,
         )
       ],
     );
