@@ -12,7 +12,7 @@ class MyPixel extends StatelessWidget {
       padding: const EdgeInsets.all(2.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(4),
-        child: MyButton(),
+        child: Container(color: color),
       ),
     );
   }

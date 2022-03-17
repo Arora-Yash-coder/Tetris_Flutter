@@ -89,23 +89,55 @@ class _MyGameState extends State<MyGame> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
-                    child: MyButton(
-                      child: Text("1"),
+                    child: GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: MyButton(
+                          child: const Text(
+                            "PLAY",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: MyButton(
-                      child: Text("1"),
+                    child: GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: MyButton(
+                          child: const Icon(
+                            Icons.arrow_left_rounded,
+                            size: 50,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: MyButton(
-                      child: Text("1"),
+                    child: GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: MyButton(
+                          child: const Icon(
+                            Icons.arrow_right_rounded,
+                            size: 50,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: MyButton(
-                      child: Text("1"),
+                    child: GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: MyButton(
+                          child: const Icon(Icons.rotate_right_rounded),
+                        ),
+                      ),
                     ),
                   ),
                 ],

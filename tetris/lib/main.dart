@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tetris',
       theme: ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: MyGame(),
       ),

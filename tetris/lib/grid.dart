@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tetris/button.dart';
+import 'package:tetris/pixel.dart';
 
 class MyGrid extends StatelessWidget {
   const MyGrid({Key? key}) : super(key: key);
@@ -7,13 +8,13 @@ class MyGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 180,
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 10),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 10),
         itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: MyButton(),
+          return MyPixel(
+            color: Colors.black,
           );
         });
   }
