@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
-  final child;
-  MyButton({this.child});
+  final Widget child;
+  MyButton({required this.child});
 
   @override
   Widget build(BuildContext context) {

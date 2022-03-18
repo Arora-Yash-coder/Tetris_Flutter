@@ -37,7 +37,7 @@ class _MyGameState extends State<MyGame> {
   List<int> landed = [];
   List<List<int>> landedPosColor = [];
 
-  static int number = 0;
+  int number = 0;
   double count = 0;
 
   //Starts the game
@@ -90,6 +90,7 @@ class _MyGameState extends State<MyGame> {
                 children: [
                   Expanded(
                     child: GestureDetector(
+                      onTap: startGame,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: MyButton(
@@ -106,6 +107,7 @@ class _MyGameState extends State<MyGame> {
                   ),
                   Expanded(
                     child: GestureDetector(
+                      onTap: moveLeft,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: MyButton(
@@ -119,6 +121,7 @@ class _MyGameState extends State<MyGame> {
                   ),
                   Expanded(
                     child: GestureDetector(
+                      onTap: moveRight,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: MyButton(
@@ -132,6 +135,7 @@ class _MyGameState extends State<MyGame> {
                   ),
                   Expanded(
                     child: GestureDetector(
+                      onTap: rotatePiece,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: MyButton(
@@ -145,7 +149,7 @@ class _MyGameState extends State<MyGame> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         )
       ],

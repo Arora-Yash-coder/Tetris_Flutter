@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tetris/button.dart';
 
 class MyPixel extends StatelessWidget {
-  late final color;
+  late final Color color;
 
-  MyPixel({this.color});
+  MyPixel({required this.color});
 
   @override
   Widget build(BuildContext context) {
