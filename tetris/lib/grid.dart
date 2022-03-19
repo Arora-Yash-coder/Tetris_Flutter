@@ -21,22 +21,24 @@ class MyGrid extends StatelessWidget {
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 10),
         itemBuilder: (BuildContext context, int index) {
-          for (var i = 0; i < pieceColor.length; i++) {
-            if (landedPieces[i].contains(index)) {
-              return MyPixel(
-                color: pieceColor[i],
-              );
-            }
-          }
-          if (newPiece.contains(index)) {
-            return MyPixel(
-              color: newColor,
-            );
-          } else {
-            return MyPixel(
-              color: Colors.black,
-            );
-          }
+          // for (var i = 0; i < pieceColor.length; i++) {
+          //   if (landedPieces[i].contains(index)) {
+          //     return MyPixel(
+          //       color: pieceColor[i],
+          //     );
+          //   }
+          // }
+          // if (newPiece.contains(index)) {
+          //   return MyPixel(
+          //     color: newColor,
+          //   );
+          // } else {
+          //   return MyPixel(
+          //     color: Colors.black,
+          //   );
+          // }
+
+          return MyPixel(color: Colors.black);
         });
   }
 }
