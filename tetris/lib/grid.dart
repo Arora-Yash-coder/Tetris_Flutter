@@ -28,17 +28,15 @@ class MyGrid extends StatelessWidget {
           //     );
           //   }
           // }
-          // if (newPiece.contains(index)) {
-          //   return MyPixel(
-          //     color: newColor,
-          //   );
-          // } else {
-          //   return MyPixel(
-          //     color: Colors.black,
-          //   );
-          // }
-
-          return MyPixel(color: Colors.black);
+          if (newPiece.contains(index)) {
+            return MyPixel(
+              color: newColor,
+            );
+          } else {
+            return MyPixel(
+              color: Colors.black,
+            );
+          }
         });
   }
 }

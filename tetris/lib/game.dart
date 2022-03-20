@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tetris/button.dart';
@@ -48,8 +49,14 @@ class _MyGameState extends State<MyGame> {
     const duration = Duration(milliseconds: 300);
     Timer.periodic(
       duration,
-      (Timer timer) {},
-      //
+      (Timer timer) {
+        if (hitFloor()) {
+          timer.cancel();
+          // startGame();
+        } else {
+          moveDown();
+        }
+      },
     );
   }
 
@@ -58,18 +65,57 @@ class _MyGameState extends State<MyGame> {
   //Clears the rows filled
   void clearRow() {}
   //Choses a randonm piece
-  void choosePiece() {}
+  void choosePiece() {
+    setState(() {
+      Random random = Random();
+      chosenPiece = pieces[random.nextInt(pieces.length)];
+      print(chosenPiece);
+    });
+  }
+
   //Moves the chosen piece down
-  void moveDown() {}
+  void moveDown() {
+    setState(() {
+      for (var i = 0; i < chosenPiece.length; i++) {
+        chosenPiece[i] += 10;
+      }
+    });
+  }
+
   //Moves the chosen piece Left
-  void moveLeft() {}
+  void moveLeft() {
+    setState(() {
+      for (var i = 0; i < chosenPiece.length; i++) {
+        chosenPiece[i] -= 1;
+      }
+    });
+  }
+
   //Moves the chosen piece Right
-  void moveRight() {}
+  void moveRight() {
+    setState(() {
+      for (var i = 0; i < chosenPiece.length; i++) {
+        chosenPiece[i] += 1;
+      }
+    });
+  }
+
   //Rotates the chosen piece
   void rotatePiece() {}
   //Checks if chosen piece stoped
   bool hitFloor() {
-    return false;
+    bool hitFloor = false;
+    chosenPiece.sort();
+    if (chosenPiece.last + 10 >= 180) {
+      hitFloor = true;
+    }
+
+    // for (var i = 0; i < chosenPiece.length; i++) {
+    //   if (landed.contains(chosenPiece[i] + 10)) {
+    //     hitFloor = true;
+    //   }
+    // }
+    return hitFloor;
   }
 
   @override
@@ -78,7 +124,10 @@ class _MyGameState extends State<MyGame> {
       children: [
         Expanded(
           flex: 10,
-          child: MyGrid(),
+          child: MyGrid(
+            newPiece: chosenPiece,
+            newColor: pieceColor[0],
+          ),
         ),
         Expanded(
           child: Container(
