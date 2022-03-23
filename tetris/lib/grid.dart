@@ -9,9 +9,21 @@ class MyGrid extends StatelessWidget {
   // The color of new piece
   final newColor;
 
-  final pieceColor;
-
-  MyGrid({this.landedPieces, this.newColor, this.newPiece, this.pieceColor});
+  MyGrid({
+    this.landedPieces,
+    this.newColor,
+    this.newPiece,
+  });
+  //All types of Colors
+  List<Color> pieceColor = [
+    Colors.red,
+    Colors.yellow,
+    Colors.purple,
+    Colors.green,
+    Colors.blue,
+    Colors.brown,
+    Colors.pink
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +33,13 @@ class MyGrid extends StatelessWidget {
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 10),
         itemBuilder: (BuildContext context, int index) {
-          // for (var i = 0; i < pieceColor.length; i++) {
-          //   if (landedPieces[i].contains(index)) {
-          //     return MyPixel(
-          //       color: pieceColor[i],
-          //     );
-          //   }
-          // }
+          for (var i = 0; i < pieceColor.length; i++) {
+            if (landedPieces[i].contains(index)) {
+              return MyPixel(
+                color: pieceColor[i],
+              );
+            }
+          }
           if (newPiece.contains(index)) {
             return MyPixel(
               color: newColor,

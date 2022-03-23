@@ -33,12 +33,22 @@ class _MyGameState extends State<MyGame> {
     Colors.brown,
     Colors.pink
   ];
-
+  // The new piece spawned
   List<int> chosenPiece = [];
+  // The pieces which landed
   List<int> landed = [];
-  List<List<int>> landedPosColor = [];
+  List<List<int>> landedPosColor = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ];
 
   int number = 0;
+
   double count = 0;
 
   //Starts the game
@@ -50,9 +60,19 @@ class _MyGameState extends State<MyGame> {
     Timer.periodic(
       duration,
       (Timer timer) {
+        // print(landedPosColor);
         if (hitFloor()) {
+          for (var i = 0; i < chosenPiece.length; i++) {
+            landed.add(chosenPiece[i]);
+            landedPosColor[number % pieces.length].add(chosenPiece[i]);
+          }
+          for (var i = 0; i < pieces.length; i++) {
+            print(pieces[i]);
+          }
+          number++;
+          //  print(number);
+          startGame();
           timer.cancel();
-          // startGame();
         } else {
           moveDown();
         }
@@ -61,15 +81,28 @@ class _MyGameState extends State<MyGame> {
   }
 
   //Resets the game
-  void resetPieces() {}
+  void resetPieces() {
+    pieces = [
+      [4, 5, 14, 15],
+      [4, 14, 24, 25],
+      [5, 15, 24, 25],
+      [4, 14, 24, 34],
+      [4, 14, 15, 25],
+      [5, 15, 14, 24],
+      [4, 5, 6, 15]
+    ];
+    chosenPiece = [];
+  }
+
   //Clears the rows filled
   void clearRow() {}
   //Choses a randonm piece
   void choosePiece() {
     setState(() {
       Random random = Random();
-      chosenPiece = pieces[random.nextInt(pieces.length)];
-      print(chosenPiece);
+      int temp = random.nextInt(6);
+      chosenPiece = pieces[temp];
+      print('chosen Peice:$chosenPiece');
     });
   }
 
@@ -84,20 +117,36 @@ class _MyGameState extends State<MyGame> {
 
   //Moves the chosen piece Left
   void moveLeft() {
-    setState(() {
-      for (var i = 0; i < chosenPiece.length; i++) {
-        chosenPiece[i] -= 1;
-      }
-    });
+    if (chosenPiece.any(
+        (element) => (element) % 10 == 0 || landed.contains(element - 1))) {
+    } else {
+      setState(() {
+        for (var i = 0; i < chosenPiece.length; i++) {
+          chosenPiece[i] -= 1;
+        }
+      });
+    }
+    for (var i = 0; i < chosenPiece.length; i++) {
+      if (landed.contains(chosenPiece[i] - 1) ||
+          (chosenPiece[i] - 1) % 10 == 0) {}
+    }
   }
 
   //Moves the chosen piece Right
   void moveRight() {
-    setState(() {
-      for (var i = 0; i < chosenPiece.length; i++) {
-        chosenPiece[i] += 1;
-      }
-    });
+    if (chosenPiece.any(
+        (element) => (element + 1) % 10 == 0 || landed.contains(element + 1))) {
+    } else {
+      setState(() {
+        for (var i = 0; i < chosenPiece.length; i++) {
+          chosenPiece[i] += 1;
+        }
+      });
+    }
+    for (var i = 0; i < chosenPiece.length; i++) {
+      if (landed.contains(chosenPiece[i] + 1) ||
+          (chosenPiece[i] - 1) % 10 == 0) {}
+    }
   }
 
   //Rotates the chosen piece
@@ -110,11 +159,11 @@ class _MyGameState extends State<MyGame> {
       hitFloor = true;
     }
 
-    // for (var i = 0; i < chosenPiece.length; i++) {
-    //   if (landed.contains(chosenPiece[i] + 10)) {
-    //     hitFloor = true;
-    //   }
-    // }
+    for (var i = 0; i < chosenPiece.length; i++) {
+      if (landed.contains(chosenPiece[i] + 10)) {
+        hitFloor = true;
+      }
+    }
     return hitFloor;
   }
 
@@ -125,76 +174,75 @@ class _MyGameState extends State<MyGame> {
         Expanded(
           flex: 10,
           child: MyGrid(
+            landedPieces: landedPosColor,
             newPiece: chosenPiece,
-            newColor: pieceColor[0],
+            newColor: pieceColor[number % pieces.length],
           ),
         ),
         Expanded(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: startGame,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: MyButton(
-                          child: const Text(
-                            "PLAY",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: startGame,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: MyButton(
+                        child: const Text(
+                          "PLAY",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: moveLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: MyButton(
-                          child: const Icon(
-                            Icons.arrow_left_rounded,
-                            size: 50,
-                          ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: moveLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: MyButton(
+                        child: const Icon(
+                          Icons.arrow_left_rounded,
+                          size: 50,
                         ),
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: moveRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: MyButton(
-                          child: const Icon(
-                            Icons.arrow_right_rounded,
-                            size: 50,
-                          ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: moveRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: MyButton(
+                        child: const Icon(
+                          Icons.arrow_right_rounded,
+                          size: 50,
                         ),
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: rotatePiece,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: MyButton(
-                          child: const Icon(Icons.rotate_right_rounded),
-                        ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: rotatePiece,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: MyButton(
+                        child: const Icon(Icons.rotate_right_rounded),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
