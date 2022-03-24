@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Tetris',
       theme: ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark),
       debugShowCheckedModeBanner: false,
-      home: const Scaffold(
+      home: Scaffold(
         body: MyGame(),
       ),
     );

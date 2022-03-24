@@ -56,7 +56,7 @@ class _MyGameState extends State<MyGame> {
   void startGame() {
     choosePiece();
     //Speed of the game
-    const duration = Duration(milliseconds: 300);
+    const duration = Duration(milliseconds: 150);
     Timer.periodic(
       duration,
       (Timer timer) {
@@ -97,7 +97,7 @@ class _MyGameState extends State<MyGame> {
             for (var element in removeRow) {
               landed.remove(element);
             }
-            for (var q = 0; q < count; q++) {
+            for (var q = 0; q < pieces.length; q++) {
               for (var element in removeRow) {
                 landedPosColor[q].remove(element);
               }
@@ -110,11 +110,9 @@ class _MyGameState extends State<MyGame> {
             }
 
             for (var q = 0; q < landedPosColor.length; q++) {
-              for (var r = 0; r < landedPosColor[q].length; i++) {
+              for (var r = 0; r < landedPosColor[q].length; r++) {
                 if (landedPosColor[q][r] < removeRow.first) {
-                  setState(() {
-                    landedPosColor[q][r] += 10;
-                  });
+                  landedPosColor[q][r] += 10;
                 }
               }
             }
@@ -179,6 +177,7 @@ class _MyGameState extends State<MyGame> {
 
   //Rotates the chosen piece
   void rotatePiece() {}
+
   //Checks if chosen piece stoped
   bool hitFloor() {
     bool hitFloor = false;
