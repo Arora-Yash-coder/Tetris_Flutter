@@ -50,7 +50,7 @@ class _MyGameState extends State<MyGame> {
   // Variable representing number of blocks landed
   int number = 0;
   // Variable representing something
-  double count1 = 0;
+  double count = 0;
 
   //Starts the game
   void startGame() {
@@ -112,7 +112,9 @@ class _MyGameState extends State<MyGame> {
             for (var q = 0; q < landedPosColor.length; q++) {
               for (var r = 0; r < landedPosColor[q].length; i++) {
                 if (landedPosColor[q][r] < removeRow.first) {
-                  landedPosColor[q][r] += 10;
+                  setState(() {
+                    landedPosColor[q][r] += 10;
+                  });
                 }
               }
             }
