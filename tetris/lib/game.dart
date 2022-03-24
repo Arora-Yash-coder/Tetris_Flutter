@@ -14,14 +14,14 @@ class MyGame extends StatefulWidget {
 
 class _MyGameState extends State<MyGame> {
   // All types of pieces
-  static List<List<int>> pieces = [
+  List<List<int>> pieces = [
     [4, 5, 14, 15],
     [4, 14, 24, 25],
     [5, 15, 24, 25],
     [4, 14, 24, 34],
     [4, 14, 15, 25],
     [5, 15, 14, 24],
-    [4, 5, 6, 15]
+    [4, 5, 6, 15],
   ];
   //All types of Colors
   List<Color> pieceColor = [
@@ -31,12 +31,13 @@ class _MyGameState extends State<MyGame> {
     Colors.green,
     Colors.blue,
     Colors.brown,
-    Colors.pink
+    Colors.pink,
   ];
   // The new piece spawned
   List<int> chosenPiece = [];
   // The pieces which landed
   List<int> landed = [];
+  // All the positions neede to be filled
   List<List<int>> landedPosColor = [
     [],
     [],
@@ -46,31 +47,29 @@ class _MyGameState extends State<MyGame> {
     [],
     [],
   ];
-
+  // Variable representing number of blocks landed
   int number = 0;
-
-  double count = 0;
+  // Variable representing something
+  double count1 = 0;
 
   //Starts the game
   void startGame() {
-    resetPieces();
     choosePiece();
     //Speed of the game
     const duration = Duration(milliseconds: 300);
     Timer.periodic(
       duration,
       (Timer timer) {
+        clearRow();
         // print(landedPosColor);
         if (hitFloor()) {
           for (var i = 0; i < chosenPiece.length; i++) {
             landed.add(chosenPiece[i]);
             landedPosColor[number % pieces.length].add(chosenPiece[i]);
           }
-          for (var i = 0; i < pieces.length; i++) {
-            print(pieces[i]);
-          }
+
           number++;
-          //  print(number);
+          print(number);
           startGame();
           timer.cancel();
         } else {
@@ -80,28 +79,55 @@ class _MyGameState extends State<MyGame> {
     );
   }
 
-  //Resets the game
-  void resetPieces() {
-    pieces = [
-      [4, 5, 14, 15],
-      [4, 14, 24, 25],
-      [5, 15, 24, 25],
-      [4, 14, 24, 34],
-      [4, 14, 15, 25],
-      [5, 15, 14, 24],
-      [4, 5, 6, 15]
-    ];
-    chosenPiece = [];
+  //Clears the rows filled
+  void clearRow() {
+    int count;
+    List<int> removeRow = [];
+
+    for (var i = 0; i < 18; i++) {
+      removeRow.clear();
+      count = 0;
+      for (var j = 0; j < 10; j++) {
+        if (landed.contains(179 - i * 10 - j)) {
+          removeRow.add(179 - i * 10 - j);
+          count++;
+        }
+        if (count == 10) {
+          setState(() {
+            for (var element in removeRow) {
+              landed.remove(element);
+            }
+            for (var q = 0; q < count; q++) {
+              for (var element in removeRow) {
+                landedPosColor[q].remove(element);
+              }
+            }
+
+            for (var i = 0; i < landed.length; i++) {
+              if (landed[i] < removeRow.first) {
+                landed[i] += 10;
+              }
+            }
+
+            for (var q = 0; q < landedPosColor.length; q++) {
+              for (var r = 0; r < landedPosColor[q].length; i++) {
+                if (landedPosColor[q][r] < removeRow.first) {
+                  landedPosColor[q][r] += 10;
+                }
+              }
+            }
+          });
+        }
+      }
+    }
   }
 
-  //Clears the rows filled
-  void clearRow() {}
   //Choses a randonm piece
   void choosePiece() {
     setState(() {
       Random random = Random();
       int temp = random.nextInt(6);
-      chosenPiece = pieces[temp];
+      chosenPiece = List<int>.of(pieces[temp]);
       print('chosen Peice:$chosenPiece');
     });
   }
