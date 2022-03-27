@@ -273,13 +273,14 @@ class _MyGameState extends State<MyGame> {
 
   //Checks if the game ended
   bool gameEnded() {
-    for (var i = 0; i < landedPosColor.length - 1; i++) {
-      for (var j = 0; j < landedPosColor[i].length; j++) {
-        if (landedPosColor[i].contains(landedPosColor[i + 1][j])) {
-          return true;
-        }
-      }
-    }
+    //! Fix the commented loop
+    // for (var i = 0; i < landedPosColor.length - 1; i++) {
+    //   for (var j = 0; j < landedPosColor[i].length; j++) {
+    //     if (landedPosColor[i].contains(landedPosColor[i + 1][j])) {
+    //       return true;
+    //     }
+    //   }
+    // }
     return false;
   }
 
