@@ -37,7 +37,7 @@ class _MyGameState extends State<MyGame> {
   List<int> chosenPiece = [];
   // The pieces which landed
   List<int> landed = [];
-  // All the positions neede to be filled
+  // All the positions needed to be filled
   List<List<int>> landedPosColor = [
     [],
     [],
@@ -49,34 +49,40 @@ class _MyGameState extends State<MyGame> {
   ];
   // Variable representing number of blocks landed
   int number = 0;
-  // Variable representing something
-  double count = 0;
+  // Variable representing score
+  int score = 0;
+
+  //
+  bool check = false;
 
   //Starts the game
   void startGame() {
-    choosePiece();
-    //Speed of the game
-    const duration = Duration(milliseconds: 150);
-    Timer.periodic(
-      duration,
-      (Timer timer) {
-        clearRow();
-        // print(landedPosColor);
-        if (hitFloor()) {
-          for (var i = 0; i < chosenPiece.length; i++) {
-            landed.add(chosenPiece[i]);
-            landedPosColor[number % pieces.length].add(chosenPiece[i]);
+    if (check) {
+      _showDialog();
+    } else {
+      choosePiece();
+      //Speed of the game
+      const duration = Duration(milliseconds: 300);
+      Timer.periodic(
+        duration,
+        (Timer timer) {
+          print(landedPosColor);
+          check = gameEnded();
+          clearRow();
+          if (hitFloor()) {
+            for (var i = 0; i < chosenPiece.length; i++) {
+              landed.add(chosenPiece[i]);
+              landedPosColor[number % pieces.length].add(chosenPiece[i]);
+            }
+            number++;
+            startGame();
+            timer.cancel();
+          } else {
+            moveDown();
           }
-
-          number++;
-          print(number);
-          startGame();
-          timer.cancel();
-        } else {
-          moveDown();
-        }
-      },
-    );
+        },
+      );
+    }
   }
 
   //Clears the rows filled
@@ -116,6 +122,7 @@ class _MyGameState extends State<MyGame> {
                 }
               }
             }
+            score++;
           });
         }
       }
@@ -127,8 +134,8 @@ class _MyGameState extends State<MyGame> {
     setState(() {
       Random random = Random();
       int temp = random.nextInt(6);
-      chosenPiece = List<int>.of(pieces[temp]);
-      print('chosen Peice:$chosenPiece');
+      chosenPiece = List<int>.of(pieces[3]);
+      print('chosen Peice:${chosenPiece}');
     });
   }
 
@@ -192,6 +199,88 @@ class _MyGameState extends State<MyGame> {
       }
     }
     return hitFloor;
+  }
+
+  // Resets the game
+  void resetGame() {
+    Navigator.pop(context);
+    setState(() {
+      landedPosColor = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+      ];
+      chosenPiece = [];
+    });
+  }
+
+  //Shows the score
+  void _showDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            titlePadding: const EdgeInsets.only(top: 10),
+            actionsPadding: const EdgeInsets.only(bottom: 10),
+            backgroundColor: Colors.grey.shade800,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text(
+                    "G A M E  O V E R",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Text(
+                    "SCORE : $score",
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ],
+              ), // Text
+            ), // Center
+            actions: [
+              Center(
+                child: GestureDetector(
+                  onTap: resetGame,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      padding: const EdgeInsets.all(7),
+                      color: Colors.white,
+                      child: const Text(
+                        "PLAY AGAIN",
+                        style: TextStyle(color: Colors.grey),
+                      ), // Text
+                    ), // Container
+                  ), // ClipRRect
+                ),
+              ) // GestureDetector
+            ],
+          ); // AlertDialog
+        });
+  }
+
+  //Checks if the game ended
+  bool gameEnded() {
+    for (var i = 0; i < landedPosColor.length - 1; i++) {
+      for (var j = 0; j < landedPosColor[i].length; j++) {
+        if (landedPosColor[i].contains(landedPosColor[i + 1][j])) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   @override
