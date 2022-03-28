@@ -63,7 +63,6 @@ class _MyGameState extends State<MyGame> {
       _showDialog();
     } else {
       choosePiece();
-
       print(pieceIndex);
       //Speed of the game
       const duration = Duration(milliseconds: 300);
@@ -204,10 +203,23 @@ class _MyGameState extends State<MyGame> {
     } else {
       temp = chosenPiece;
     }
-    pieceState++;
-    setState(() {
-      chosenPiece = temp;
-    });
+    if (rotationChecker(temp)) {
+      pieceState++;
+      setState(() {
+        chosenPiece = temp;
+      });
+    }
+  }
+
+  bool rotationChecker(List<int> list) {
+    for (var i = 0; i < landedPosColor.length; i++) {
+      for (var j = 0; j < landedPosColor[i].length; i++) {
+        if (list.any((element) => element == landedPosColor[i][j])) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   List<int> rotation1() {
