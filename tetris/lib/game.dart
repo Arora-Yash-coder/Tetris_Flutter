@@ -21,7 +21,7 @@ class _MyGameState extends State<MyGame> {
     [4, 14, 24, 34],
     [4, 14, 15, 25],
     [5, 15, 14, 24],
-    [4, 5, 6, 15],
+    [14, 15, 16, 25],
   ];
   //All types of Colors
   List<Color> pieceColor = [
@@ -53,6 +53,9 @@ class _MyGameState extends State<MyGame> {
   int score = 0;
   // Checks if the game ended
   bool check = false;
+  // Stores index of the chosen piece
+  int pieceIndex = 0;
+  int pieceState = 0;
 
   //Starts the game
   void startGame() {
@@ -60,6 +63,8 @@ class _MyGameState extends State<MyGame> {
       _showDialog();
     } else {
       choosePiece();
+
+      print(pieceIndex);
       //Speed of the game
       const duration = Duration(milliseconds: 300);
       Timer.periodic(
@@ -73,6 +78,7 @@ class _MyGameState extends State<MyGame> {
               landedPosColor[number % pieces.length].add(chosenPiece[i]);
             }
             number++;
+            pieceState = 0;
             startGame();
             timer.cancel();
           } else {
@@ -131,8 +137,8 @@ class _MyGameState extends State<MyGame> {
   void choosePiece() {
     setState(() {
       Random random = Random();
-      int temp = random.nextInt(6);
-      chosenPiece = List<int>.of(pieces[temp]);
+      pieceIndex = random.nextInt(6);
+      chosenPiece = List<int>.of(pieces[pieceIndex]);
       // print('chosen Peice:${chosenPiece}');
     });
   }
@@ -182,32 +188,221 @@ class _MyGameState extends State<MyGame> {
 
   //Rotates the chosen piece
   void rotatePiece() {
-    final snackBar = SnackBar(
-      backgroundColor: Colors.grey.shade800,
-      content: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: const [
-            Text(
-              'This aint no easy Game',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              'NOOB',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-      duration: const Duration(milliseconds: 500),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    List<int> temp = [];
+    if (pieceIndex == 1) {
+      temp = rotation1();
+    } else if (pieceIndex == 2) {
+      temp = rotation2();
+    } else if (pieceIndex == 3) {
+      temp = rotation3();
+    } else if (pieceIndex == 4) {
+      temp = rotation4();
+    } else if (pieceIndex == 5) {
+      temp = rotation5();
+    } else if (pieceIndex == 6) {
+      temp = rotation6();
+    } else {
+      temp = chosenPiece;
+    }
+    pieceState++;
+    setState(() {
+      chosenPiece = temp;
+    });
+  }
+
+  List<int> rotation1() {
+    List<int> temp = [];
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    if (pieceState % 4 == 0) {
+      a = 11;
+      b = 0;
+      c = -11;
+      d = -2;
+    } else if (pieceState % 4 == 1) {
+      a = -9;
+      b = 0;
+      c = 9;
+      d = -20;
+    } else if (pieceState % 4 == 2) {
+      a = 2;
+      b = 11;
+      c = 0;
+      d = -11;
+    } else if (pieceState % 4 == 3) {
+      a = 20;
+      b = -9;
+      c = 0;
+      d = 9;
+    }
+    temp.add(chosenPiece[0] + a);
+    temp.add(chosenPiece[1] + b);
+    temp.add(chosenPiece[2] + c);
+    temp.add(chosenPiece[3] + d);
+    return temp;
+  }
+
+  List<int> rotation2() {
+    List<int> temp = [];
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    if (pieceState % 4 == 0) {
+      a = 11;
+      b = 0;
+      c = -20;
+      d = -11;
+    } else if (pieceState % 4 == 1) {
+      a = 2;
+      b = -9;
+      c = 0;
+      d = 9;
+    } else if (pieceState % 4 == 2) {
+      a = 11;
+      b = 20;
+      c = 0;
+      d = -11;
+    } else if (pieceState % 4 == 3) {
+      a = -9;
+      b = 0;
+      c = 9;
+      d = -2;
+    }
+    temp.add(chosenPiece[0] + a);
+    temp.add(chosenPiece[1] + b);
+    temp.add(chosenPiece[2] + c);
+    temp.add(chosenPiece[3] + d);
+    return temp;
+  }
+
+  List<int> rotation3() {
+    List<int> temp = [];
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    if (pieceState % 2 == 0) {
+      a = 12;
+      b = 1;
+      c = -10;
+      d = -21;
+    } else {
+      a = 21;
+      b = 10;
+      c = -1;
+      d = -12;
+    }
+    temp.add(chosenPiece[0] + a);
+    temp.add(chosenPiece[1] + b);
+    temp.add(chosenPiece[2] + c);
+    temp.add(chosenPiece[3] + d);
+
+    return temp;
+  }
+
+  List<int> rotation4() {
+    List<int> temp = [];
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    if (pieceState % 4 == 0) {
+      a = 11;
+      b = 0;
+      c = 9;
+      d = -2;
+    } else if (pieceState % 4 == 1) {
+      a = 0;
+      b = 9;
+      c = -10;
+      d = -21;
+    } else if (pieceState % 4 == 2) {
+      a = 2;
+      b = -9;
+      c = 0;
+      d = -11;
+    } else if (pieceState % 4 == 3) {
+      a = 11;
+      b = 20;
+      c = -9;
+      d = 0;
+    }
+    temp.add(chosenPiece[0] + a);
+    temp.add(chosenPiece[1] + b);
+    temp.add(chosenPiece[2] + c);
+    temp.add(chosenPiece[3] + d);
+    return temp;
+  }
+
+  List<int> rotation5() {
+    List<int> temp = [];
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    if (pieceState % 4 == 0) {
+      a = 20;
+      b = 0;
+      c = 9;
+      d = -11;
+    } else if (pieceState % 4 == 1) {
+      a = -9;
+      b = 0;
+      c = -11;
+      d = -2;
+    } else if (pieceState % 4 == 2) {
+      a = 11;
+      b = -9;
+      c = 0;
+      d = -20;
+    } else if (pieceState % 4 == 3) {
+      a = 2;
+      b = 11;
+      c = 0;
+      d = 9;
+    }
+    temp.add(chosenPiece[0] + a);
+    temp.add(chosenPiece[1] + b);
+    temp.add(chosenPiece[2] + c);
+    temp.add(chosenPiece[3] + d);
+    return temp;
+  }
+
+  List<int> rotation6() {
+    List<int> temp = [];
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    if (pieceState % 4 == 0) {
+      a = -9;
+      b = 0;
+      c = 9;
+      d = -11;
+    } else if (pieceState % 4 == 1) {
+      a = 11;
+      b = -9;
+      c = 0;
+      d = -11;
+    } else if (pieceState % 4 == 2) {
+      a = 11;
+      b = -9;
+      c = 0;
+      d = 9;
+    } else if (pieceState % 4 == 3) {
+      a = 11;
+      b = 0;
+      c = 9;
+      d = -11;
+    }
+    temp.add(chosenPiece[0] + a);
+    temp.add(chosenPiece[1] + b);
+    temp.add(chosenPiece[2] + c);
+    temp.add(chosenPiece[3] + d);
+    return temp;
   }
 
   //Checks if chosen piece stoped
