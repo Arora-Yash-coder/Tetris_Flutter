@@ -51,8 +51,7 @@ class _MyGameState extends State<MyGame> {
   int number = 0;
   // Variable representing score
   int score = 0;
-
-  //
+  // Checks if the game ended
   bool check = false;
 
   //Starts the game
@@ -62,11 +61,10 @@ class _MyGameState extends State<MyGame> {
     } else {
       choosePiece();
       //Speed of the game
-      const duration = Duration(milliseconds: 300);
+      const duration = Duration(milliseconds: 200);
       Timer.periodic(
         duration,
         (Timer timer) {
-          print(landedPosColor);
           check = gameEnded();
           clearRow();
           if (hitFloor()) {
@@ -134,8 +132,8 @@ class _MyGameState extends State<MyGame> {
     setState(() {
       Random random = Random();
       int temp = random.nextInt(6);
-      chosenPiece = List<int>.of(pieces[3]);
-      print('chosen Peice:${chosenPiece}');
+      chosenPiece = List<int>.of(pieces[temp]);
+      // print('chosen Peice:${chosenPiece}');
     });
   }
 
@@ -183,7 +181,34 @@ class _MyGameState extends State<MyGame> {
   }
 
   //Rotates the chosen piece
-  void rotatePiece() {}
+  void rotatePiece() {
+    final snackBar = SnackBar(
+      backgroundColor: Colors.grey.shade800,
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: const [
+            Text(
+              'This aint no easy Game',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            Text(
+              'NOOB',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+      duration: const Duration(milliseconds: 500),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   //Checks if chosen piece stoped
   bool hitFloor() {
@@ -205,6 +230,7 @@ class _MyGameState extends State<MyGame> {
   void resetGame() {
     Navigator.pop(context);
     setState(() {
+      check = false;
       landedPosColor = [
         [],
         [],
@@ -215,6 +241,10 @@ class _MyGameState extends State<MyGame> {
         [],
       ];
       chosenPiece = [];
+      landed = [];
+      number = 0;
+      score = 0;
+      startGame();
     });
   }
 
@@ -236,15 +266,23 @@ class _MyGameState extends State<MyGame> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const Text(
-                    "G A M E  O V E R",
-                    style: TextStyle(color: Colors.white),
+                    "GAME OVER",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Tetris',
+                      fontSize: 35,
+                    ),
                   ),
                   const SizedBox(
                     height: 3,
                   ),
                   Text(
                     "SCORE : $score",
-                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Tetris',
+                      fontSize: 25,
+                    ),
                   ),
                 ],
               ), // Text
@@ -258,9 +296,13 @@ class _MyGameState extends State<MyGame> {
                     child: Container(
                       padding: const EdgeInsets.all(7),
                       color: Colors.white,
-                      child: const Text(
+                      child: Text(
                         "PLAY AGAIN",
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontFamily: 'Tetris',
+                          fontSize: 20,
+                        ),
                       ), // Text
                     ), // Container
                   ), // ClipRRect
@@ -273,14 +315,13 @@ class _MyGameState extends State<MyGame> {
 
   //Checks if the game ended
   bool gameEnded() {
-    //! Fix the commented loop
-    // for (var i = 0; i < landedPosColor.length - 1; i++) {
-    //   for (var j = 0; j < landedPosColor[i].length; j++) {
-    //     if (landedPosColor[i].contains(landedPosColor[i + 1][j])) {
-    //       return true;
-    //     }
-    //   }
-    // }
+    for (int i = 0; i < landedPosColor.length - 1; i++) {
+      for (int j = i + 1; j < landedPosColor.length; j++) {
+        if (landedPosColor[i].any((item) => landedPosColor[j].contains(item))) {
+          return true;
+        }
+      }
+    }
     return false;
   }
 
@@ -313,7 +354,8 @@ class _MyGameState extends State<MyGame> {
                           "PLAY",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 30,
+                            fontFamily: 'Tetris',
                           ),
                         ),
                       ),
