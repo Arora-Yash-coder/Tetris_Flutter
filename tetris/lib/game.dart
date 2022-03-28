@@ -61,7 +61,7 @@ class _MyGameState extends State<MyGame> {
     } else {
       choosePiece();
       //Speed of the game
-      const duration = Duration(milliseconds: 200);
+      const duration = Duration(milliseconds: 300);
       Timer.periodic(
         duration,
         (Timer timer) {
