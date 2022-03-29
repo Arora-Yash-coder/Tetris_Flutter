@@ -212,9 +212,9 @@ class _MyGameState extends State<MyGame> {
   }
 
   bool rotationChecker(List<int> list) {
-    for (var i = 0; i < landedPosColor.length; i++) {
-      for (var j = 0; j < landedPosColor[i].length; i++) {
-        if (list.any((element) => element == landedPosColor[i][j])) {
+    for (int i = 0; i < landedPosColor.length; i++) {
+      for (int j = 0; j < list.length; j++) {
+        if (landedPosColor[i].contains(list[j])) {
           return false;
         }
       }
