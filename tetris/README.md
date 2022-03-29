@@ -1,3 +1,2 @@
-# tetris
-
+# Tetris
 A game created using Flutter.
