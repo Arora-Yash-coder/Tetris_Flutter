@@ -21,7 +21,7 @@ class MyGrid extends StatefulWidget {
 }
 
 class _MyGridState extends State<MyGrid> {
-  //All types of Colors
+  // All types of Colors
   List<Color> pieceColor = [
     Colors.red,
     Colors.yellow,

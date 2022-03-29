@@ -23,7 +23,7 @@ class _MyGameState extends State<MyGame> {
     [5, 15, 14, 24],
     [14, 15, 16, 25],
   ];
-  //All types of Colors
+  // All types of Colors
   List<Color> pieceColor = [
     Colors.red,
     Colors.yellow,
@@ -58,7 +58,7 @@ class _MyGameState extends State<MyGame> {
   // Stores the number of rotations in chosen piece
   int pieceState = 0;
 
-  //Starts the game
+  // Starts the game
   void startGame() {
     if (check) {
       _showDialog();
@@ -88,7 +88,7 @@ class _MyGameState extends State<MyGame> {
     }
   }
 
-  //Clears the rows filled
+  // Clears the rows filled
   void clearRow() {
     int count;
     List<int> removeRow = [];
@@ -132,7 +132,7 @@ class _MyGameState extends State<MyGame> {
     }
   }
 
-  //Choses a randonm piece
+  // Choses a randonm piece
   void choosePiece() {
     setState(() {
       Random random = Random();
@@ -141,7 +141,7 @@ class _MyGameState extends State<MyGame> {
     });
   }
 
-  //Moves the chosen piece down
+  // Moves the chosen piece down
   void moveDown() {
     setState(() {
       for (var i = 0; i < chosenPiece.length; i++) {
@@ -150,7 +150,7 @@ class _MyGameState extends State<MyGame> {
     });
   }
 
-  //Moves the chosen piece Left
+  // Moves the chosen piece Left
   void moveLeft() {
     if (chosenPiece.any(
         (element) => (element) % 10 == 0 || landed.contains(element - 1))) {
@@ -167,7 +167,7 @@ class _MyGameState extends State<MyGame> {
     }
   }
 
-  //Moves the chosen piece Right
+  // Moves the chosen piece Right
   void moveRight() {
     if (chosenPiece.any(
         (element) => (element + 1) % 10 == 0 || landed.contains(element + 1))) {
@@ -184,7 +184,7 @@ class _MyGameState extends State<MyGame> {
     }
   }
 
-  //Rotates the chosen piece
+  // Rotates the chosen piece
   void rotatePiece() {
     List<int> temp = [];
     if (pieceIndex == 1) {
@@ -222,6 +222,7 @@ class _MyGameState extends State<MyGame> {
     return true;
   }
 
+  // Rotation rules for peices[1]
   List<int> rotation1() {
     List<int> temp = [];
     int a = 0;
@@ -256,6 +257,7 @@ class _MyGameState extends State<MyGame> {
     return temp;
   }
 
+  // Rotation rules for peices[2]
   List<int> rotation2() {
     List<int> temp = [];
     int a = 0;
@@ -290,6 +292,7 @@ class _MyGameState extends State<MyGame> {
     return temp;
   }
 
+  // Rotation rules for peices[3]
   List<int> rotation3() {
     List<int> temp = [];
     int a = 0;
@@ -315,6 +318,7 @@ class _MyGameState extends State<MyGame> {
     return temp;
   }
 
+  // Rotation rules for peices[4]
   List<int> rotation4() {
     List<int> temp = [];
     int a = 0;
@@ -349,6 +353,7 @@ class _MyGameState extends State<MyGame> {
     return temp;
   }
 
+  // Rotation rules for peices[5]
   List<int> rotation5() {
     List<int> temp = [];
     int a = 0;
@@ -383,6 +388,7 @@ class _MyGameState extends State<MyGame> {
     return temp;
   }
 
+  // Rotation rules for peices[6]
   List<int> rotation6() {
     List<int> temp = [];
     int a = 0;
