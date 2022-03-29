@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tetris/pixel.dart';
 
-class MyGrid extends StatelessWidget {
+class MyGrid extends StatefulWidget {
   // List of all the peices landed
   final List<List<int>> landedPieces;
   // The new piece which spawned;
@@ -9,12 +9,18 @@ class MyGrid extends StatelessWidget {
   // The color of new piece
   final Color newColor;
 
-  MyGrid({
+  const MyGrid({
     Key? key,
     required this.landedPieces,
     required this.newColor,
     required this.newPiece,
   }) : super(key: key);
+
+  @override
+  State<MyGrid> createState() => _MyGridState();
+}
+
+class _MyGridState extends State<MyGrid> {
   //All types of Colors
   List<Color> pieceColor = [
     Colors.red,
@@ -35,15 +41,15 @@ class MyGrid extends StatelessWidget {
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 10),
         itemBuilder: (BuildContext context, int index) {
           for (var i = 0; i < pieceColor.length; i++) {
-            if (landedPieces[i].contains(index)) {
+            if (widget.landedPieces[i].contains(index)) {
               return MyPixel(
                 color: pieceColor[i],
               );
             }
           }
-          if (newPiece.contains(index)) {
+          if (widget.newPiece.contains(index)) {
             return MyPixel(
-              color: newColor,
+              color: widget.newColor,
             );
           } else {
             return const MyPixel(

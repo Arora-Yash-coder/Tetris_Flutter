@@ -63,7 +63,6 @@ class _MyGameState extends State<MyGame> {
       _showDialog();
     } else {
       choosePiece();
-      print(pieceIndex);
       //Speed of the game
       const duration = Duration(milliseconds: 300);
       Timer.periodic(
@@ -554,10 +553,10 @@ class _MyGameState extends State<MyGame> {
                 Expanded(
                   child: GestureDetector(
                     onTap: startGame,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(4.0),
                       child: MyButton(
-                        child: const Text(
+                        child: Text(
                           "PLAY",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -572,10 +571,10 @@ class _MyGameState extends State<MyGame> {
                 Expanded(
                   child: GestureDetector(
                     onTap: moveLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(4.0),
                       child: MyButton(
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_left_rounded,
                           size: 50,
                         ),
@@ -586,10 +585,10 @@ class _MyGameState extends State<MyGame> {
                 Expanded(
                   child: GestureDetector(
                     onTap: moveRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(4.0),
                       child: MyButton(
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_right_rounded,
                           size: 50,
                         ),
@@ -600,10 +599,10 @@ class _MyGameState extends State<MyGame> {
                 Expanded(
                   child: GestureDetector(
                     onTap: rotatePiece,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(4.0),
                       child: MyButton(
-                        child: const Icon(Icons.rotate_right_rounded),
+                        child: Icon(Icons.rotate_right_rounded),
                       ),
                     ),
                   ),
