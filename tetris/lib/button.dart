@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
+  // Content shown in the button
   final Widget child;
-  MyButton({required this.child});
+
+  const MyButton({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

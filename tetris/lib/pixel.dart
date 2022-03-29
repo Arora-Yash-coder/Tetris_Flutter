@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MyPixel extends StatelessWidget {
-  late final Color color;
+  // Stores the color of the Pixel
+  final Color color;
 
-  MyPixel({
+  const MyPixel({
     Key? key,
     required this.color,
   }) : super(key: key);

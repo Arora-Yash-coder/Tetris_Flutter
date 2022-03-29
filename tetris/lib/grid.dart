@@ -3,17 +3,18 @@ import 'package:tetris/pixel.dart';
 
 class MyGrid extends StatelessWidget {
   // List of all the peices landed
-  final landedPieces;
+  final List<List<int>> landedPieces;
   // The new piece which spawned;
-  final newPiece;
+  final List<int> newPiece;
   // The color of new piece
-  final newColor;
+  final Color newColor;
 
   MyGrid({
-    this.landedPieces,
-    this.newColor,
-    this.newPiece,
-  });
+    Key? key,
+    required this.landedPieces,
+    required this.newColor,
+    required this.newPiece,
+  }) : super(key: key);
   //All types of Colors
   List<Color> pieceColor = [
     Colors.red,
@@ -45,7 +46,7 @@ class MyGrid extends StatelessWidget {
               color: newColor,
             );
           } else {
-            return MyPixel(
+            return const MyPixel(
               color: Colors.black,
             );
           }
