@@ -55,6 +55,7 @@ class _MyGameState extends State<MyGame> {
   bool check = false;
   // Stores index of the chosen piece
   int pieceIndex = 0;
+  // Stores the number of rotations in chosen piece
   int pieceState = 0;
 
   //Starts the game
@@ -137,7 +138,6 @@ class _MyGameState extends State<MyGame> {
       Random random = Random();
       pieceIndex = random.nextInt(6);
       chosenPiece = List<int>.of(pieces[pieceIndex]);
-      // print('chosen Peice:${chosenPiece}');
     });
   }
 
@@ -210,6 +210,7 @@ class _MyGameState extends State<MyGame> {
     }
   }
 
+  // Checks if the rotation of the piece is possible
   bool rotationChecker(List<int> list) {
     for (int i = 0; i < landedPosColor.length; i++) {
       for (int j = 0; j < list.length; j++) {
@@ -450,6 +451,8 @@ class _MyGameState extends State<MyGame> {
       landed = [];
       number = 0;
       score = 0;
+      pieceIndex = 0;
+      pieceState = 0;
       startGame();
     });
   }
