@@ -57,6 +57,8 @@ class _MyGameState extends State<MyGame> {
   int pieceIndex = 0;
   // Stores the number of rotations in chosen piece
   int pieceState = 0;
+  // Stores the play button state
+  bool playCheck = false;
 
   // Starts the game
   void startGame() {
@@ -64,6 +66,7 @@ class _MyGameState extends State<MyGame> {
       _showDialog();
     } else {
       choosePiece();
+      playCheck = true;
       //Speed of the game
       const duration = Duration(milliseconds: 300);
       Timer.periodic(
@@ -459,6 +462,7 @@ class _MyGameState extends State<MyGame> {
       score = 0;
       pieceIndex = 0;
       pieceState = 0;
+      playCheck = false;
       startGame();
     });
   }
@@ -561,7 +565,7 @@ class _MyGameState extends State<MyGame> {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: startGame,
+                    onTap: playCheck ? () {} : startGame,
                     child: const Padding(
                       padding: EdgeInsets.all(4.0),
                       child: MyButton(
